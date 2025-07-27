@@ -14,7 +14,8 @@ const InterviewCard = async ({
   techstack,
   createdAt,
 }: InterviewCardProps) => {
-  const feedback = userId && id
+  const feedback =
+    userId && id
       ? await getFeedbackByInterviewId({
           interviewId: id,
           userId,
@@ -67,11 +68,7 @@ const InterviewCard = async ({
 
           <Button className="btn-primary">
             <Link
-              href={
-                feedback
-                  ? `/interview/${id}/feedback`
-                  : `/interview/${id}`
-              }
+              href={feedback ? `/interview/${id}/feedback` : `/interview/${id}`}
             >
               {feedback ? "Check Feedback" : "View Interview"}
             </Link>

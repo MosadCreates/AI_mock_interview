@@ -5,7 +5,7 @@ import { db } from "@/firebase/admin";
 import { google } from "@ai-sdk/google";
 import { generateObject } from "ai";
 
-export async function getInterviewByUserId(
+export async function getInterviewsByUserId(
   userId: string
 ): Promise<Interview[] | null> {
   const interviews = await db
