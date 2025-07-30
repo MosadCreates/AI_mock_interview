@@ -6,8 +6,13 @@ import { google } from "@ai-sdk/google";
 import { generateObject } from "ai";
 
 export async function getInterviewsByUserId(
-  userId: string
+  userId: string | undefined
 ): Promise<Interview[] | null> {
+  if (!userId) {
+    console.error("getInterviewsByUserId: userId is undefined");
+    return null;
+  }
+
   const interviews = await db
     .collection("interviews")
     .where("userId", "==", userId)
@@ -20,10 +25,17 @@ export async function getInterviewsByUserId(
   })) as Interview[];
 }
 
+
 export async function getLatestInterviews(
   params: GetLatestInterviewsParams
 ): Promise<Interview[] | null> {
   const { userId, limit = 20 } = params;
+
+  if (!userId) {
+    console.error("getLatestInterviews: userId is undefined");
+    return null;
+  }
+
   const interviews = await db
     .collection("interviews")
     .orderBy("createdAt", "desc")
@@ -37,6 +49,7 @@ export async function getLatestInterviews(
     ...doc.data(),
   })) as Interview[];
 }
+
 
 export async function getInterviewById(id: string): Promise<Interview | null> {
   const interview = await db.collection("interviews").doc(id).get();
